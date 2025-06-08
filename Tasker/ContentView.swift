@@ -9,11 +9,51 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
-  @State var selectedTab: Int = 0
+  @State var currentTab: Int = 0
   
   var body: some View {
-    
+    ZStack {
+      TabView(selection: $currentTab) {
+        views
+      }
+      .tabViewStyle(.page)
+      .animation(.easeOut(duration: 0.5), value: currentTab)
+      .transition(.slide)
+      GeometryReader { geometry in
+        VStack {
+          Spacer()
+          TabBarView(
+            selectedIndex: $currentTab,
+            items: tabItems,
+            extraBottomPadding: geometry.safeAreaInsets.bottom
+          )
+        }
+      }
+    }
   }
+}
+
+@ViewBuilder
+private var views: some View {
+  let views: [AnyView] = [
+    AnyView(Text("Home")),
+    AnyView(Text("Tasks")),
+    AnyView(Text("Calendar")),
+    AnyView(Text("Add new task"))
+  ]
+  
+  ForEach(Array(views.enumerated()), id: \.offset) { index, view in
+    view.tag(index)
+  }
+}
+
+private var tabItems: [TabBarItem] {
+  [
+    TabBarItem(icon: .systemHome, selectedIcon: .systemHomeFill),
+    TabBarItem(icon: .systemList, selectedIcon: .systemListFill),
+    TabBarItem(icon: .systemCalendar, selectedIcon: .systemCalendarFill),
+    TabBarItem(icon: .systemPlus, selectedIcon: .systemPlusFill)
+  ]
 }
 
 #Preview {

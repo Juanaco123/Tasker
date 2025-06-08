@@ -11,8 +11,13 @@ import Foundation
 struct TabBarItem: Identifiable {
   var id: UUID = UUID()
   var icon: ImageResource
+  var selectedIcon: ImageResource
   
-  init(icon: ImageResource) {
+  init(
+    icon: ImageResource,
+    selectedIcon: ImageResource,
+  ) {
     self.icon = icon
+    self.selectedIcon = selectedIcon
   }
 }
