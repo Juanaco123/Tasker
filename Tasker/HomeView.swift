@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  Tasker
 //
 //  Created by Juan Camilo Victoria Pacheco on 7/06/25.
@@ -8,14 +8,8 @@
 import Foundation
 import SwiftUI
 
-struct ContentView: View {
-  @State var selectedTab: Int = 0
-  
+struct HomeView: View {
   var body: some View {
     
   }
-}
-
-#Preview {
-  ContentView()
 }
