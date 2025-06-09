@@ -19,6 +19,7 @@ struct ContentView: View {
       .tabViewStyle(.page)
       .animation(.easeOut(duration: 0.5), value: currentTab)
       .transition(.slide)
+      
       GeometryReader { geometry in
         VStack {
           Spacer()
@@ -36,7 +37,7 @@ struct ContentView: View {
 @ViewBuilder
 private var views: some View {
   let views: [AnyView] = [
-    AnyView(Text("Home")),
+    AnyView(HomeView()),
     AnyView(Text("Tasks")),
     AnyView(Text("Calendar")),
     AnyView(Text("Add new task"))
