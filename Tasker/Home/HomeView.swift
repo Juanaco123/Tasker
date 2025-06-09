@@ -9,17 +9,42 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
+  @State var searchText: String
+  
+  init(searchText: String = "") {
+    self.searchText = searchText
+  }
+  
   var body: some View {
     VStack(spacing: .zero) {
-      HStack {
-        TitleByPeriod()
-          .padding(.top, .space11x)
-        Spacer()
+      VStack {
+        HStack {
+          TitleByPeriod()
+            .padding(.top, .space11x)
+          Spacer()
+        }
+        
+        WeekCalendar()
+        
+        // TODO: Search bar
+        HStack {
+          Icon(
+            image: .systemSearch,
+            iconColor: .smoke
+          )
+          ZStack(alignment: .leading) {
+            TextField("", text: $searchText)
+            Text(searchText.isEmpty ? "Search your task" : "")
+              .foregroundStyle(.smoke)
+          }
+        }
+        .padding(.vertical, .space1x)
+        .padding(.leading, .space2x)
+        .background(.cloudy)
+        .clipShape(.rect(cornerRadius: .radius10))
+        .padding(.top, .space3x)
       }
       .applyDefaultPadding()
-      
-      WeekCalendar()
-        .applyDefaultPadding()
       
       NavigationStack {
         ScrollView {

@@ -15,10 +15,9 @@ private enum TimePeriod {
 struct TitleByPeriod: View {
   var body: some View {
     VStack(alignment: .leading, spacing: .zero) {
-      if timePeriod() == .morning || timePeriod() == .afternoon {
+      if timePeriod() == .morning {
         HStack {
           Text("Good")
-            .foregroundStyle(.canary)
             .font(.system(size: 34))
             .fontWeight(.bold)
           Text("morning")
@@ -27,7 +26,7 @@ struct TitleByPeriod: View {
             .fontWeight(.bold)
         }
         
-        HStack(spacing: .zero) {
+        HStack {
           Text("Have a nice")
             .font(.system(size: 28))
             .fontWeight(.regular)
@@ -38,6 +37,31 @@ struct TitleByPeriod: View {
           Icon(
             image: .systemSun,
             iconColor: .canary
+          )
+        }
+        
+      } else if timePeriod() == .afternoon {
+        HStack {
+          Text("Good")
+            .font(.system(size: 34))
+            .fontWeight(.bold)
+          Text("afternoon")
+            .foregroundStyle(.priceton)
+            .font(.system(size: 34))
+            .fontWeight(.bold)
+        }
+        
+        HStack {
+          Text("Have you taken a")
+            .font(.system(size: 28))
+            .fontWeight(.regular)
+          Text("break yet?")
+            .foregroundStyle(.priceton)
+            .font(.system(size: 28))
+            .fontWeight(.regular)
+          Icon(
+            image: .systemMiddaySun,
+            iconColor: .priceton
           )
         }
         
