@@ -18,6 +18,9 @@ struct HomeView: View {
       }
       .applyDefaultPadding()
       
+      WeekCalendar()
+        .applyDefaultPadding()
+      
       NavigationStack {
         ScrollView {
           HStack(spacing: .zero) {

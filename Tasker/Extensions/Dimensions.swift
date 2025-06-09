@@ -28,5 +28,7 @@ extension CGFloat {
   static let space11x: CGFloat = 44.0
   
   //MARK: - Radius
+  static let radius10: CGFloat = 10.0
+  
   static let radius15: CGFloat = 15.0
 }
