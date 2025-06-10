@@ -16,9 +16,7 @@ struct ContentView: View {
       TabView(selection: $currentTab) {
         views
       }
-      .tabViewStyle(.page)
-      .animation(.easeOut(duration: 0.5), value: currentTab)
-      .transition(.slide)
+      .animation(.easeInOut(duration: 0.5), value: currentTab)
       
       GeometryReader { geometry in
         VStack {
@@ -32,29 +30,30 @@ struct ContentView: View {
       }
     }
   }
-}
-
-@ViewBuilder
-private var views: some View {
-  let views: [AnyView] = [
-    AnyView(HomeView()),
-    AnyView(Text("Tasks")),
-    AnyView(Text("Calendar")),
-    AnyView(Text("Add new task"))
-  ]
   
-  ForEach(Array(views.enumerated()), id: \.offset) { index, view in
-    view.tag(index)
+  @ViewBuilder
+  private var views: some View {
+    let views: [AnyView] = [
+      AnyView(HomeView(currentTab: $currentTab)),
+      AnyView(TasksView()),
+      AnyView(Text("Calendar")),
+      AnyView(Text("Add new task"))
+    ]
+    
+    ForEach(Array(views.enumerated()), id: \.offset) { index, view in
+      view.tag(index)
+        .opacity(currentTab == index ? 1 : 0)
+    }
   }
-}
-
-private var tabItems: [TabBarItem] {
-  [
-    TabBarItem(icon: .systemHome, selectedIcon: .systemHomeFill),
-    TabBarItem(icon: .systemList, selectedIcon: .systemListFill),
-    TabBarItem(icon: .systemCalendar, selectedIcon: .systemCalendarFill),
-    TabBarItem(icon: .systemPlus, selectedIcon: .systemPlusFill)
-  ]
+  
+  private var tabItems: [TabBarItem] {
+    [
+      TabBarItem(icon: .systemHome, selectedIcon: .systemHomeFill),
+      TabBarItem(icon: .systemList, selectedIcon: .systemListFill),
+      TabBarItem(icon: .systemCalendar, selectedIcon: .systemCalendarFill),
+      TabBarItem(icon: .systemPlus, selectedIcon: .systemPlusFill)
+    ]
+  }
 }
 
 #Preview {

@@ -9,56 +9,66 @@ import Foundation
 import SwiftUI
 
 struct HomeView: View {
-  @State var searchText: String
+  @Binding private var currentTab: Int
+  @State private var searchText: String = ""
+  @State private var goToAllTasks: NavigationPath = NavigationPath()
   
-  init(searchText: String = "") {
-    self.searchText = searchText
+  init(currentTab: Binding<Int>) {
+    self._currentTab = currentTab
   }
   
   var body: some View {
-    VStack(spacing: .zero) {
-      VStack {
-        HStack {
-          TitleByPeriod()
-            .padding(.top, .space11x)
-          Spacer()
-        }
-        
-        WeekCalendar()
-        
-        // TODO: Search bar
-        HStack {
-          Icon(
-            image: .systemSearch,
-            iconColor: .smoke
-          )
-          ZStack(alignment: .leading) {
-            TextField("", text: $searchText)
-            Text(searchText.isEmpty ? "Search your task" : "")
-              .foregroundStyle(.smoke)
+    NavigationStack(path: $goToAllTasks) {
+      VStack(spacing: .zero) {
+        VStack {
+          HStack {
+            TitleByPeriod()
+              .padding(.top, .space11x)
+            Spacer()
           }
+          
+          WeekCalendar()
+            .onTapGesture {
+              currentTab = 2
+            }
+          
+          // TODO: Search bar
+          HStack {
+            Icon(
+              image: .systemSearch,
+              iconColor: .smoke
+            )
+            ZStack(alignment: .leading) {
+              TextField("", text: $searchText)
+              Text(searchText.isEmpty ? "Search your task" : "")
+                .foregroundStyle(.smoke)
+            }
+          }
+          .padding(.vertical, .space1x)
+          .padding(.leading, .space2x)
+          .background(.cloudy)
+          .clipShape(.rect(cornerRadius: .radius10))
+          .padding(.top, .space3x)
         }
-        .padding(.vertical, .space1x)
-        .padding(.leading, .space2x)
-        .background(.cloudy)
-        .clipShape(.rect(cornerRadius: .radius10))
-        .padding(.top, .space3x)
-      }
-      .applyDefaultPadding()
-      
-      NavigationStack {
+        .applyDefaultPadding()
+        
         ScrollView {
           HStack(spacing: .zero) {
             Text("Task")
               .font(.system(size: 28.0))
               .fontWeight(.semibold)
             Spacer()
-            Text("See all")
-              .foregroundStyle(.lime)
-            Icon(
-              image: .systemChevronRight,
-              iconColor: .lime
-            )
+            
+            Button {
+              currentTab = 1
+            } label: {
+              Text("See all")
+                .foregroundStyle(.lime)
+              Icon(
+                image: .systemChevronRight,
+                iconColor: .lime
+              )
+            }
           }
           
           HStack {
@@ -85,10 +95,11 @@ struct HomeView: View {
         .padding(.top, .space6x)
         .padding(.horizontal, .space4x)
       }
+      
     }
   }
 }
 
 #Preview {
-  HomeView()
+  HomeView(currentTab: .constant(1))
 }

@@ -64,6 +64,8 @@ struct TitleByPeriod: View {
             iconColor: .priceton
           )
         }
+        .lineLimit(1)
+        .minimumScaleFactor(0.6)
         
       } else {
         HStack {
